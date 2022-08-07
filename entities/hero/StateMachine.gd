@@ -26,6 +26,9 @@ func switch_state(new_state):
 
 func _input(event):
 	current_state._handle_input(event)
+	
+	if (event.is_action_pressed("jump") && (entity.coyoteTimer < entity.numCoyoteFrames)):
+		switch_state("Jump")
 
 func _physics_process(delta):
 	current_state._update(delta)

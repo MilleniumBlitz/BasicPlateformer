@@ -8,7 +8,7 @@ func _enter_state():
 	entity.velocity.y -= entity.jump_force
 
 func _update(_delta):
-
+	._update(_delta)
 	entity.velocity.x = lerp(entity.velocity.x, entity.MAX_SPEED * entity.direction, 0.15)
 	entity.velocity.y += entity.gravity
 	entity.velocity = entity.move_and_slide(entity.velocity, Vector2.UP)

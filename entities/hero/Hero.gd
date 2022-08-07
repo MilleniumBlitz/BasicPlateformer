@@ -10,18 +10,20 @@ onready var slideCollision : CollisionShape2D = $SlideCollision
 
 signal velocity_changed
 
+const MAX_SPEED = 150
+
 var gravity = 10
 
-var direction = Vector2.LEFT.x
+var direction = Vector2.RIGHT.x
 var velocity := Vector2() setget set_velocity
 var look_at = 1
 
 var jump_force = 300
 var double_jump = false
+var coyoteTimer = 0
+var numCoyoteFrames = 6
 
 var rotation_enabled = true
-
-const MAX_SPEED = 150
 
 func set_velocity(value):
 	velocity = value
@@ -30,7 +32,7 @@ func set_velocity(value):
 func _ready():
 	stateMachine.start(self)
 	
-func _process(delta):
+func _process(_delta):
 	direction = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	if (direction != 0):
 		look_at = direction
