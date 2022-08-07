@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://assets/hero/Adventurer/Individual Sprites/adventurer-idle-00.png" type="Texture" id=1]
 [ext_resource path="res://assets/hero/Adventurer/Individual Sprites/adventurer-idle-01.png" type="Texture" id=2]
@@ -23,9 +23,19 @@
 [ext_resource path="res://entities/hero/states/Jump.gd" type="Script" id=21]
 [ext_resource path="res://entities/hero/states/Slide.gd" type="Script" id=22]
 [ext_resource path="res://entities/hero/states/Fall.gd" type="Script" id=23]
+[ext_resource path="res://entities/hero/states/Crouch.gd" type="Script" id=24]
+[ext_resource path="res://assets/hero/Adventurer/Individual Sprites/adventurer-crouch-02.png" type="Texture" id=25]
+[ext_resource path="res://assets/hero/Adventurer/Individual Sprites/adventurer-crouch-01.png" type="Texture" id=26]
+[ext_resource path="res://assets/hero/Adventurer/Individual Sprites/adventurer-crouch-03.png" type="Texture" id=27]
+[ext_resource path="res://assets/hero/Adventurer/Individual Sprites/adventurer-crouch-00.png" type="Texture" id=28]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 28 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "crouch",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
 "loop": true,
 "name": "fall",
@@ -53,8 +63,8 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 6.0
-height = 22.0
+radius = 8.0
+height = 14.0
 
 [sub_resource type="Animation" id=3]
 resource_name = "slide"
@@ -99,7 +109,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 8.0
+radius = 6.99997
 
 [node name="Hero" type="KinematicBody2D"]
 script = ExtResource( 3 )
@@ -109,14 +119,16 @@ frames = SubResource( 1 )
 animation = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 1 )
+visible = false
+position = Vector2( 0, 3 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/slide = SubResource( 3 )
 
 [node name="SlideCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 1, 10 )
+visible = false
+position = Vector2( 0, 11 )
 rotation = 1.5708
 shape = SubResource( 4 )
 disabled = true
@@ -124,17 +136,36 @@ disabled = true
 [node name="States" type="Node" parent="."]
 script = ExtResource( 20 )
 
-[node name="Idle" type="Node2D" parent="States"]
+[node name="Idle" type="Node" parent="States"]
 script = ExtResource( 18 )
 
-[node name="Run" type="Node2D" parent="States"]
+[node name="Run" type="Node" parent="States"]
 script = ExtResource( 19 )
 
-[node name="Fall" type="Node2D" parent="States"]
-script = ExtResource( 23 )
-
-[node name="Jump" type="Node2D" parent="States"]
+[node name="Jump" type="Node" parent="States"]
 script = ExtResource( 21 )
 
-[node name="Slide" type="Node2D" parent="States"]
+[node name="Fall" type="Node" parent="States"]
+script = ExtResource( 23 )
+
+[node name="Slide" type="Node" parent="States"]
 script = ExtResource( 22 )
+
+[node name="Crouch" type="Node" parent="States"]
+script = ExtResource( 24 )
+
+[node name="LeftSlideCeillingRayCast" type="RayCast2D" parent="."]
+visible = false
+position = Vector2( -11, 4 )
+enabled = true
+cast_to = Vector2( 0, -10 )
+
+[node name="RightSlideCeillingRayCast" type="RayCast2D" parent="."]
+visible = false
+position = Vector2( 11, 4 )
+enabled = true
+cast_to = Vector2( 0, -10 )
+
+[node name="WallRaycast" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 10, 0 )

@@ -4,20 +4,25 @@ class_name StateMachine
 
 var entity : KinematicBody2D
 
-onready var current_state : State = $Idle
+onready var current_state : State
 
-func _ready():
-	for child in get_children():
-		child.connect("switch_state", self, "switch_state")
-	
+signal state_changed
+
 func start(value):
 	entity = value
-	current_state.setEnabled(true)
-
+	
+	for child in get_children():
+		child.entity = entity
+		child.connect("switch_state", self, "switch_state")
+	
+	current_state = get_node("Idle")
+	
 func switch_state(new_state):
 	if (current_state.name != new_state):
-		print(new_state)
-		current_state.enabled = false
+		emit_signal("state_changed", new_state)
 		current_state._exit_state()
 		current_state = get_node(new_state)
-		current_state.enabled = true
+		current_state._enter_state()
+
+func _physics_process(delta):
+	current_state._update(delta)

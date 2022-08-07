@@ -1,14 +1,35 @@
 extends OnGround
 
-func _start():
-	._start()
-	entity.animationPlayer.play("slide")
+const MIN_SLIDE_SPEED = 70
 
-func _physics_process(delta):
-	if (entity.direction.x == 0):
+var direction
+
+
+func _enter_state():
+	._enter_state()
+	entity.animationPlayer.play("slide")
+	entity.set_rotation_locked(true)
+	direction = entity.direction
+
+func _update(_delta):
+	
+	if (!entity.is_on_floor()):
+		emit_signal("switch_state", "Fall")
+	
+	if ((entity.direction == 0 || entity.direction != direction) && !entity.is_slide_ceilling_touching()):
 		emit_signal("switch_state", "Idle")
 
+	if (!entity.is_slide_ceilling_touching()):
+		entity.velocity.x = lerp(entity.velocity.x, 0, 0.01)
+	entity.velocity.y += entity.gravity
+	entity.velocity = entity.move_and_slide(entity.velocity, Vector2.UP)
+	
+	if (abs(entity.velocity.x) <= abs(MIN_SLIDE_SPEED)):
+		emit_signal("switch_state", "Run")
+
 func _exit_state():
+	._exit_state()
+	entity.set_rotation_locked(false)
 	entity.animationPlayer.stop()
 	entity.normalCollision.disabled = false
 	entity.slideCollision.disabled = true

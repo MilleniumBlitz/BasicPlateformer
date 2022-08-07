@@ -2,23 +2,20 @@ extends Node
 
 class_name State
 
-var enabled = false setget setEnabled
 var entity
 
 signal switch_state(new_state)
 
 func _ready():
-	setEnabled(false)
+	set_process_input(false)
 
-func _start():
-	entity = get_parent().entity
-
-func _exit_state():
+func _enter_state():
+	set_process_input(true)
 	pass
 
-func setEnabled(value):
-	set_process_input(value)
-	set_physics_process(value)
-	enabled = value
-	if (enabled):
-		_start()
+func _update(_delta):
+	pass
+
+func _exit_state():
+	set_process_input(false)
+	pass
