@@ -1,9 +1,9 @@
-extends State
+extends OnAir
 
 func _enter_state():
 	._enter_state()
 	get_parent().entity.animatedSprite.play("fall")
-
+	
 func _update(_delta):
 	if (get_parent().entity.is_on_floor()):
 		if (entity.direction != 0):

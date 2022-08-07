@@ -4,17 +4,15 @@ func _enter_state():
 	._enter_state()
 	entity.animatedSprite.play("idle")
 	
-func _input(event):
-	._input(event)
+func _handle_input(event):
+	._handle_input(event)
 	if (event.is_action_pressed("ui_down")):
 		emit_signal("switch_state", "Crouch")
 	
 func _update(_delta):
-	if (!entity.is_on_floor()):
-		emit_signal("switch_state", "Fall")
-	else:
-		if (entity.direction != 0 && !entity.is_next_to_wall()):
-			emit_signal("switch_state", "Run")
+	._update(_delta)
+	if (entity.direction != 0 && !entity.is_next_to_wall() && entity.is_on_floor()):
+			emit_signal("switch_state", "Run")	
 	
 	entity.velocity.x = lerp(entity.velocity.x, 0, 0.1)
 	entity.velocity.y += entity.gravity

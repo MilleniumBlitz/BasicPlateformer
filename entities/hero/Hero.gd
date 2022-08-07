@@ -16,6 +16,9 @@ var direction = Vector2.LEFT.x
 var velocity := Vector2() setget set_velocity
 var look_at = 1
 
+var jump_force = 300
+var double_jump = false
+
 var rotation_enabled = true
 
 const MAX_SPEED = 150
@@ -28,7 +31,7 @@ func _ready():
 	stateMachine.start(self)
 	
 func _process(delta):
-	direction = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
+	direction = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	if (direction != 0):
 		look_at = direction
 			

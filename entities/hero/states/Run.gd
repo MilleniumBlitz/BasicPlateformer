@@ -4,11 +4,13 @@ func _enter_state():
 	._enter_state()
 	entity.animatedSprite.play("run")
 
-func _input(event):
+func _handle_input(event):
+	._handle_input(event)
 	if (event.is_action_pressed("slide")):
 		emit_signal("switch_state", "Slide")
 
 func _update(_delta):
+	._update(_delta)
 	if (entity.direction == 0 || entity.is_next_to_wall()):
 		emit_signal("switch_state", "Idle")
 	

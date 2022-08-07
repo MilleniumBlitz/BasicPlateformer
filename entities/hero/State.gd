@@ -13,6 +13,9 @@ func _enter_state():
 	set_process_input(true)
 	pass
 
+func _handle_input(event : InputEvent):
+	pass
+
 func _update(_delta):
 	pass
 

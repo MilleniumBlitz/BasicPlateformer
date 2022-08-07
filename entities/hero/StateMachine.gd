@@ -24,5 +24,8 @@ func switch_state(new_state):
 		current_state = get_node(new_state)
 		current_state._enter_state()
 
+func _input(event):
+	current_state._handle_input(event)
+
 func _physics_process(delta):
 	current_state._update(delta)
