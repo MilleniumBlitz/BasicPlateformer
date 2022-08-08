@@ -5,6 +5,7 @@ class_name State
 var entity
 
 signal switch_state(new_state)
+signal exit_state()
 
 func _ready():
 	set_process_input(false)
