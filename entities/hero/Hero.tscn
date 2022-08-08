@@ -62,9 +62,8 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 8.0
-height = 14.0
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 7, 14 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "slide"
@@ -119,9 +118,8 @@ frames = SubResource( 1 )
 animation = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 3 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/slide = SubResource( 3 )

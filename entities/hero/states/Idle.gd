@@ -14,6 +14,6 @@ func _update(_delta):
 	if (entity.direction != 0 && !entity.is_next_to_wall() && entity.is_on_floor()):
 			emit_signal("switch_state", "Run")	
 	
-	entity.velocity.x = lerp(entity.velocity.x, 0, 0.1)
+	entity.velocity.x = lerp(entity.velocity.x, 0, 0.3)
 	entity.velocity.y += entity.gravity
 	entity.velocity = entity.move_and_slide(entity.velocity, Vector2.UP)

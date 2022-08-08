@@ -22,6 +22,8 @@ var jump_force = 300
 var double_jump = false
 var coyoteTimer = 0
 var numCoyoteFrames = 6
+var stickyWallTimer = 0
+var stickyWallFrames = 10
 
 var rotation_enabled = true
 
